@@ -1,6 +1,6 @@
 /* Defines -----------------------------------------------------------*/
 #define LED_GREEN PB5   // PB5 is AVR pin where green on-board LED
-#define LED_RED PB0     // External active-low LED
+
 #define SHORT_DELAY 250 // Delay in milliseconds
 #ifndef F_CPU
 # define F_CPU 16000000 // CPU frequency in Hz required for delay funcs
@@ -33,7 +33,6 @@ int main(void)
 
     // Set pins where LEDs are connected as output
     pinMode(LED_GREEN, OUTPUT);
-    pinMode(LED_RED, OUTPUT);
 
     // Infinite loop
     while (1)
@@ -44,15 +43,21 @@ int main(void)
         // Change LED value
         if (led_value == 0) {
             led_value = 1;
-            // Set pin(s) to HIGH
             digitalWrite(LED_GREEN, HIGH);
-            digitalWrite(LED_RED, HIGH);
         }
-        else {
+        else if (led_value == 1) {
+            led_value = 2;
+            digitalWrite(LED_GREEN, HIGH);
+        }
+        else if (led_value == 2) {
+            led_value = 3;
+            // Clear pin(s) to LOW
+            digitalWrite(LED_GREEN, LOW);
+        }
+        else if (led_value == 3) {
             led_value = 0;
             // Clear pin(s) to LOW
             digitalWrite(LED_GREEN, LOW);
-            digitalWrite(LED_RED, LOW);
         }
     }
 
